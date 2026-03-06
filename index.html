@@ -1,1 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Membership Account</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
 
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .header {
+      background: #2c3e50;
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .content {
+      padding: 24px;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .value {
+      color: #222;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 18px;
+      margin-top: 12px;
+      background: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #2980b9;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: #27ae60;
+    }
+
+    .btn-secondary:hover {
+      background: #1f8a4b;
+    }
+
+    .btn-danger {
+      background: #e74c3c;
+    }
+
+    .btn-danger:hover {
+      background: #c0392b;
+    }
+
+    @media (max-width: 600px) {
+      .info-row {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>My Membership Account</h1>
+      <p>Manage your subscription and profile</p>
+    </div>
+
+    <div class="content">
+      <div class="card">
+        <h2>Profile Information</h2>
+        <div class="info-row">
+          <span class="label">Name:</span>
+          <span class="value">John Doe</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Email:</span>
+          <span class="value">john@example.com</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Member ID:</span>
+          <span class="value">MEM-10245</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Membership Details</h2>
+        <div class="info-row">
+          <span class="label">Plan:</span>
+          <span class="value">Premium Membership</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Status:</span>
+          <span class="value">Active</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Renewal Date:</span>
+          <span class="value">December 31, 2026</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Account Actions</h2>
+        <div class="actions">
+          <a href="#" class="btn">Edit Profile</a>
+          <a href="#" class="btn btn-secondary">Upgrade Plan</a>
+          <a href="#" class="btn btn-danger">Cancel Membership</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
