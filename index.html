@@ -5,56 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Astral Forge | Account</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#0b0b0b;
-      --panel: rgba(0,0,0,.35);
-      --panel-2: rgba(0,0,0,.22);
-      --panel-3: rgba(255,255,255,.04);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
-      --border: rgba(255,255,255,.12);
-      --border-2: rgba(255,255,255,.18);
-      --ring: rgba(255,255,255,.28);
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 16px;
-      --radius-sm: 12px;
-      --max: 1120px;
+      --bg:#0b0b0d;
+      --bg-2:#111114;
+      --panel:rgba(8,8,10,.72);
+      --panel-2:rgba(255,255,255,.05);
+      --panel-3:rgba(255,255,255,.035);
+      --text:rgba(255,255,255,.94);
+      --muted:rgba(255,255,255,.72);
+      --soft:rgba(255,255,255,.58);
+      --border:rgba(255,255,255,.12);
+      --border-2:rgba(255,255,255,.18);
+      --ring:rgba(201,168,108,.35);
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius-sm:12px;
+      --max:1160px;
 
-      --paper: #cdbb9a;
-      --paper-2: #c4b08b;
-      --paper-border: rgba(65, 44, 18, .24);
-      --paper-text: #241a10;
-      --paper-muted: #5f513f;
-      --paper-line: rgba(50, 34, 15, .12);
-      --gold: #c9a86c;
+      --gold:#c9a86c;
+      --gold-2:#b99054;
+      --gold-deep:#8a6737;
+
+      --paper:#cfbc98;
+      --paper-2:#c3ae87;
+      --paper-text:#241a10;
+      --paper-muted:#5c4c39;
+      --paper-line:rgba(50,34,15,.14);
+      --paper-border:rgba(65,44,18,.22);
     }
 
     *{ box-sizing:border-box; }
 
-    html,body{
+    html, body{
       margin:0;
       padding:0;
       background:var(--bg);
       color:var(--text);
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     }
 
-    a{ color:inherit; text-decoration:none; }
-    img{ max-width:100%; height:auto; }
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    img{
+      max-width:100%;
+      height:auto;
+      display:block;
+    }
+
+    body{
+      min-height:100vh;
+      background:
+        linear-gradient(rgba(6,6,8,.72), rgba(6,6,8,.85)),
+        url("/assets/backgrounds/Astral-Forge.png") center / cover no-repeat fixed;
+    }
 
     .navbar{
-      position:fixed;
-      top:0; left:0; right:0;
+      position:sticky;
+      top:0;
       z-index:1000;
       display:flex;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
+      gap:18px;
       padding:12px 28px;
-      background:rgba(0,0,0,.72);
-      backdrop-filter: blur(12px);
+      background:rgba(8,8,10,.76);
+      backdrop-filter:blur(12px);
       border-bottom:1px solid var(--border);
     }
 
@@ -62,71 +85,73 @@
       display:flex;
       align-items:center;
       gap:12px;
+      min-width:0;
     }
 
     .nav-left img{
       height:38px;
       width:auto;
-      display:block;
     }
 
     .brand{
-      font-family:'Cinzel', serif;
+      font-family:'Cinzel',serif;
       font-weight:600;
-      letter-spacing:.8px;
       font-size:18px;
+      letter-spacing:.7px;
       white-space:nowrap;
     }
 
     .nav-links{
       display:flex;
       align-items:center;
-      gap:10px;
-      white-space:nowrap;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
 
     .nav-links a{
+      padding:9px 11px;
+      border-radius:999px;
       color:rgba(255,255,255,.84);
       font-size:14px;
-      padding:8px 10px;
-      border-radius:999px;
-      transition:.15s ease;
+      transition:.16s ease;
     }
 
     .nav-links a:hover{
-      background:rgba(255,255,255,.07);
+      background:rgba(255,255,255,.06);
       color:#fff;
     }
 
-    .nav-links a.cta{
-      border:1px solid var(--border-2);
-      background:rgba(255,255,255,.06);
-      padding:8px 12px;
+    .nav-links .cta{
+      border:1px solid rgba(201,168,108,.35);
+      background:rgba(201,168,108,.08);
+      color:#f4e4c4;
     }
 
     .hero{
       position:relative;
-      margin-top:64px;
-      width:100%;
       overflow:hidden;
-      background:#000;
-      min-height: 420px;
+      border-bottom:1px solid var(--border);
+      background:
+        radial-gradient(circle at 78% 28%, rgba(201,168,108,.14), transparent 30%),
+        linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,.52)),
+        #000;
     }
 
     .hero-image{
       width:100%;
-      height:420px;
+      height:430px;
       object-fit:cover;
-      display:block;
-      filter:saturate(1.02) contrast(1.03);
+      opacity:.94;
+      filter:saturate(1.04) contrast(1.04);
     }
 
     .hero-overlay{
       position:absolute;
       inset:0;
       background:
-        radial-gradient(ellipse at 72% 68%, rgba(0,0,0,.16), rgba(0,0,0,.72)),
-        linear-gradient(to bottom, rgba(0,0,0,.25), rgba(0,0,0,.68));
+        linear-gradient(to right, rgba(0,0,0,.74) 0%, rgba(0,0,0,.32) 50%, rgba(0,0,0,.66) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,.08), rgba(0,0,0,.64));
       pointer-events:none;
     }
 
@@ -134,47 +159,50 @@
       position:absolute;
       inset:0;
       display:flex;
-      align-items:flex-end;
-      justify-content:flex-end;
-      padding: clamp(18px, 3.5vw, 52px);
+      align-items:center;
     }
 
-    .hero-text{
-      text-align:right;
-      max-width: min(640px, 92%);
-      text-shadow: 0 8px 28px rgba(0,0,0,.75);
+    .container{
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 20px;
     }
 
-    .hero-text h1{
+    .hero-copy{
+      max-width:640px;
+      text-shadow:0 8px 28px rgba(0,0,0,.65);
+    }
+
+    .eyebrow{
+      margin:0 0 10px;
+      font-family:'Cinzel',serif;
+      font-size:12px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.76);
+    }
+
+    .hero-copy h1{
       margin:0;
-      font-family: Georgia, serif;
-      font-size: clamp(32px, 4vw, 54px);
-      line-height:1.05;
-      letter-spacing:.3px;
+      font-family:Georgia,serif;
+      font-size:clamp(34px,4.5vw,58px);
+      line-height:1.04;
+      letter-spacing:.2px;
     }
 
-    .hero-text h2{
-      margin:10px 0 0;
-      font-family: Georgia, serif;
-      font-size: clamp(18px, 2vw, 28px);
-      font-weight:600;
-      opacity:.95;
+    .hero-copy p{
+      margin:14px 0 0;
+      max-width:58ch;
+      font-size:15px;
+      line-height:1.7;
+      color:rgba(255,255,255,.82);
     }
 
-    .hero-text p{
-      margin:12px 0 0;
-      font-size:14px;
-      line-height:1.6;
-      color:rgba(255,255,255,.80);
-      max-width:56ch;
-      margin-left:auto;
-    }
-
-    .hero-cta{
-      margin-top:14px;
+    .hero-actions{
+      margin-top:20px;
       display:flex;
-      gap:10px;
-      justify-content:flex-end;
+      gap:12px;
       flex-wrap:wrap;
     }
 
@@ -183,522 +211,540 @@
       align-items:center;
       justify-content:center;
       gap:8px;
-      padding:10px 14px;
+      min-height:44px;
+      padding:10px 16px;
       border-radius:999px;
       border:1px solid var(--border-2);
       background:rgba(255,255,255,.06);
       color:#fff;
-      font-size:13.5px;
-      transition:.15s ease;
+      font-size:14px;
+      font-weight:600;
+      transition:.16s ease;
       cursor:pointer;
     }
 
-    .btn:hover{ background:rgba(255,255,255,.11); }
+    .btn:hover{
+      background:rgba(255,255,255,.11);
+    }
+
+    .btn:focus-visible{
+      outline:none;
+      box-shadow:0 0 0 3px var(--ring);
+    }
 
     .btn.primary{
-      background:rgba(255,255,255,.14);
-      border-color:rgba(255,255,255,.28);
+      background:linear-gradient(180deg, #d6b77d, #b99054);
+      border-color:rgba(255,255,255,.18);
+      color:#18120b;
     }
 
-    .btn:focus{
-      outline:none;
-      box-shadow: 0 0 0 3px var(--ring);
-    }
-
-    main{
-      background: url("/assets/backgrounds/Astral-Forge.png") center / cover no-repeat fixed;
+    .btn.ghost{
+      background:rgba(255,255,255,.04);
     }
 
     .section{
+      padding:clamp(34px,5vw,68px) 0;
       position:relative;
-      padding: clamp(40px, 5vw, 72px) 20px;
     }
 
-    .section::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(rgba(0,0,0,.70), rgba(0,0,0,.84));
-      pointer-events:none;
-    }
-
-    .container{
-      position:relative;
-      z-index:1;
-      max-width: var(--max);
-      margin:0 auto;
-    }
-
-    .eyebrow{
-      margin:0 0 10px;
-      font-family:'Cinzel', serif;
-      font-size:12px;
-      letter-spacing:.8px;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.72);
-    }
-
-    .section-title{
-      margin:0;
-      font-family: Georgia, serif;
-      font-size: clamp(28px, 3vw, 42px);
-      line-height:1.08;
-      letter-spacing:.3px;
-      color:#fff;
-    }
-
-    .subhead{
-      margin:14px 0 0;
-      color: rgba(255,255,255,.68);
-      font-size: 14px;
-      line-height:1.7;
-      max-width: 72ch;
-    }
-
-    .account-wrap{
-      margin-top:26px;
+    .grid{
       display:grid;
-      grid-template-columns: 1.55fr .95fr;
-      gap:20px;
+      grid-template-columns:1.25fr .95fr;
+      gap:22px;
       align-items:start;
     }
 
-    .panel{
-      border-radius: var(--radius);
+    .card{
       border:1px solid var(--border);
-      background: var(--panel);
-      box-shadow: var(--shadow);
+      border-radius:var(--radius);
+      background:var(--panel);
+      box-shadow:var(--shadow);
       overflow:hidden;
     }
 
     .paper{
-      background: linear-gradient(180deg, var(--paper), var(--paper-2));
-      color: var(--paper-text);
+      background:linear-gradient(180deg, var(--paper), var(--paper-2));
+      color:var(--paper-text);
       border:1px solid var(--paper-border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding:22px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:24px;
     }
 
-    .paper h3{
-      margin:0 0 16px;
-      font-family: Georgia, serif;
-      font-size: 30px;
-      line-height:1.1;
-      color:#1f160f;
+    .paper h2,
+    .card h2{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:clamp(26px,3vw,38px);
+      line-height:1.08;
+      letter-spacing:.2px;
     }
 
     .paper p{
-      color: var(--paper-muted);
-      font-size: 14px;
-      line-height:1.65;
+      color:var(--paper-muted);
+      line-height:1.68;
+      font-size:14px;
     }
 
-    .paper-grid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
+    .paper-top{
+      display:flex;
+      justify-content:space-between;
       gap:18px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:18px;
     }
 
-    .block{
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(63,43,18,.12);
-      border-radius: 10px;
-      padding:16px;
-    }
-
-    .block h4{
-      margin:0 0 14px;
-      font-family: Georgia, serif;
-      font-size: 18px;
-      color:#22170f;
-    }
-
-    .rows{
-      display:grid;
-      gap:10px;
-    }
-
-    .row{
-      display:grid;
-      grid-template-columns: 160px 1fr;
-      gap:12px;
-      align-items:start;
-      padding:10px 0;
-      border-bottom:1px solid var(--paper-line);
-    }
-
-    .row:last-child{ border-bottom:none; }
-
-    .label{
-      font-weight:700;
-      color:#3b2a19;
-      font-size:14px;
-    }
-
-    .value{
-      color:#241a10;
-      font-size:14px;
-    }
-
-    .note{
-      background: rgba(255,255,255,.12);
-      border:1px solid rgba(63,43,18,.10);
-      border-radius:10px;
-      padding:14px;
-    }
-
-    .note h5{
-      margin:0 0 8px;
-      font-size:15px;
-      color:#24170f;
-    }
-
-    .note p{
-      margin:0;
-      font-size:13px;
-    }
-
-    .status{
+    .status-pill{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:6px 10px;
+      padding:8px 12px;
       border-radius:999px;
       font-size:13px;
       font-weight:700;
-      background: rgba(89, 118, 70, .12);
-      color:#2b4b1d;
-      border:1px solid rgba(60, 90, 45, .18);
+      color:#4d3518;
+      background:rgba(255,255,255,.22);
+      border:1px solid rgba(72,48,18,.18);
+      white-space:nowrap;
     }
 
-    .status-dot{
+    .dot{
       width:8px;
       height:8px;
       border-radius:999px;
-      background:#567944;
+      background:#7d6433;
       display:inline-block;
+    }
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .paper-block{
+      border:1px solid rgba(63,43,18,.12);
+      background:rgba(255,255,255,.12);
+      border-radius:12px;
+      padding:16px;
+    }
+
+    .paper-block h3{
+      margin:0 0 10px;
+      font-family:Georgia,serif;
+      font-size:19px;
+      color:#20160f;
+    }
+
+    .paper-block p{
+      margin:0;
     }
 
     .paper-actions{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:18px;
+      margin-top:20px;
     }
 
     .paper-btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding:10px 14px;
+      min-height:42px;
+      padding:10px 15px;
       border-radius:999px;
-      border:1px solid rgba(60,40,16,.18);
-      background: rgba(255,255,255,.18);
-      color:#20160f;
-      font-size:13.5px;
+      font-size:14px;
       font-weight:600;
-      transition:.15s ease;
+      color:#21170f;
+      border:1px solid rgba(60,40,16,.18);
+      background:rgba(255,255,255,.18);
+      transition:.16s ease;
     }
 
     .paper-btn:hover{
-      background: rgba(255,255,255,.28);
+      background:rgba(255,255,255,.28);
     }
 
     .paper-btn.primary{
-      background: linear-gradient(180deg, #d8bb86, #b78d51);
-      border-color: rgba(72,48,18,.26);
+      background:linear-gradient(180deg, #d8bb86, #b78d51);
     }
 
-    .paper-btn.danger{
-      color:#5d231d;
-    }
-
-    .side-stack{
+    .stack{
       display:grid;
       gap:18px;
     }
 
-    .glass-card{
-      border-radius: var(--radius);
+    .glass{
+      padding:20px;
       border:1px solid var(--border);
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      padding:18px;
+      border-radius:var(--radius);
+      background:var(--panel);
+      box-shadow:var(--shadow);
     }
 
-    .glass-card h4{
+    .glass h3{
       margin:0 0 12px;
-      font-family:'Cinzel', serif;
-      font-weight:600;
+      font-family:'Cinzel',serif;
       font-size:15px;
       letter-spacing:.5px;
-      color:rgba(255,255,255,.92);
+      color:rgba(255,255,255,.95);
     }
 
-    .glass-card p,
-    .glass-card li{
-      color:rgba(255,255,255,.74);
+    .glass p,
+    .glass li{
+      color:rgba(255,255,255,.76);
       font-size:14px;
-      line-height:1.65;
+      line-height:1.68;
     }
 
-    .glass-card ul{
+    .glass ul{
       margin:0;
       padding-left:18px;
     }
 
-    .mini-list{
+    .auth-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .auth-tile{
+      padding:14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background:var(--panel-3);
+    }
+
+    .auth-tile strong{
+      display:block;
+      margin-bottom:6px;
+      color:#fff;
+      font-size:14px;
+    }
+
+    .mini-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .mini-links .btn{
+      min-height:40px;
+      padding:9px 13px;
+      font-size:13px;
+    }
+
+    .path-list{
       display:grid;
       gap:10px;
     }
 
-    .mini-item{
+    .path-item{
       padding:12px 14px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.10);
-      background: var(--panel-3);
+      background:var(--panel-2);
     }
 
-    .mini-item strong{
+    .path-item strong{
       display:block;
+      margin-bottom:4px;
       color:#fff;
       font-size:13.5px;
-      margin-bottom:4px;
+    }
+
+    .info-strip{
+      margin-top:24px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .info-card{
+      padding:18px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.42);
+      box-shadow:var(--shadow);
+    }
+
+    .info-card h3{
+      margin:0 0 8px;
+      font-family:Georgia,serif;
+      font-size:20px;
+    }
+
+    .info-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.68;
     }
 
     .footer{
-      position:relative;
-      z-index:1;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      padding:22px 20px;
-      background:rgba(0,0,0,.86);
+      margin-top:14px;
       border-top:1px solid var(--border);
+      background:rgba(7,7,9,.84);
     }
 
     .footer-inner{
-      max-width: var(--max);
-      margin: 0 auto;
-      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:22px 20px;
       display:flex;
       justify-content:space-between;
       align-items:center;
-      gap:14px;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .footer-links{
+      display:flex;
+      gap:16px;
       flex-wrap:wrap;
     }
 
     .footer a{
       color:rgba(255,255,255,.78);
-      margin-left:16px;
       font-size:13px;
     }
 
-    .footer a:hover{ color:#fff; }
-
-    @media (max-width: 980px){
-      .account-wrap{ grid-template-columns: 1fr; }
-      .paper-grid{ grid-template-columns: 1fr; }
-      main{ background-attachment: scroll; }
+    .footer a:hover{
+      color:#fff;
     }
 
-    @media (max-width: 780px){
-      .navbar{ padding:12px 16px; }
-      .nav-links{ gap:6px; }
-      .nav-links a{ padding:8px 9px; }
-      .brand{ display:none; }
-      .hero-text{ text-align:left; }
-      .hero-inner{ justify-content:flex-start; }
-      .hero-cta{ justify-content:flex-start; }
-      .hero-text p{ margin-left:0; }
-      .row{ grid-template-columns: 1fr; gap:4px; }
+    @media (max-width: 980px){
+      body{
+        background-attachment:scroll;
+      }
+
+      .grid,
+      .info-strip,
+      .feature-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-image{
+        height:500px;
+      }
+    }
+
+    @media (max-width: 760px){
+      .navbar{
+        padding:12px 16px;
+      }
+
+      .brand{
+        display:none;
+      }
+
+      .hero-inner{
+        align-items:flex-end;
+        padding-bottom:24px;
+      }
+
+      .hero-image{
+        height:520px;
+      }
+
+      .auth-grid{
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
-
 <body>
   <nav class="navbar" aria-label="Primary">
     <div class="nav-left">
-      <a href="/" aria-label="Astral Forge home">
+      <a href="https://astralforge.studio" aria-label="Astral Forge home">
         <img src="/assets/nav/Astral-Forge-nav.png" alt="Astral Forge">
         <span class="brand">Astral Forge</span>
       </a>
     </div>
 
     <div class="nav-links">
-      <a href="https://play.astralforge.studio" target="_blank" rel="noopener">Play</a>
-      <a href="https://codex.astralforge.studio" target="_blank" rel="noopener">Codex</a>
-      <a href="https://shop.astralforge.studio" target="_blank" rel="noopener">Shop</a>
-      <a href="/about/">About</a>
-      <a class="cta" href="/membership/">Join</a>
+      <a href="https://play.astralforge.studio">Play</a>
+      <a href="https://codex.astralforge.studio">Codex</a>
+      <a href="https://shop.astralforge.studio">Shop</a>
+      <a href="https://astralforge.studio/about/">About</a>
+      <a class="cta" href="/sign-in/">Sign In</a>
     </div>
   </nav>
 
   <header class="hero">
-    <img class="hero-image" src="/assets/hero/Astral-Forge-hero.png" alt="Astral Forge Hero">
+    <img class="hero-image" src="/assets/hero/Astral-Forge-hero.png" alt="Astral Forge hero artwork">
     <div class="hero-overlay"></div>
 
     <div class="hero-inner">
-      <div class="hero-text">
-        <h1>Your Place in the Forge</h1>
-        <h2>Membership & Account</h2>
-        <p>
-          Manage your profile, notification preferences, campaign alerts,
-          and membership settings without breaking the visual language of the site.
-        </p>
+      <div class="container">
+        <div class="hero-copy">
+          <p class="eyebrow">Account Portal</p>
+          <h1>Your Place in the Forge</h1>
+          <p>
+            Create your Astral Forge account, sign in to manage your purchases, access future downloads,
+            update your profile, and handle billing through your connected customer record.
+          </p>
 
-        <div class="hero-cta">
-          <a class="btn primary" href="/membership/">Membership Preferences →</a>
-          <a class="btn" href="https://play.astralforge.studio" target="_blank" rel="noopener">View Campaigns →</a>
+          <div class="hero-actions">
+            <a class="btn primary" href="/create-account/">Create Account</a>
+            <a class="btn ghost" href="/sign-in/">Sign In</a>
+            <a class="btn ghost" href="/billing/">Manage Billing</a>
+          </div>
         </div>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="section" aria-labelledby="account-page-title">
+    <section class="section" aria-labelledby="account-title">
       <div class="container">
-        <p class="eyebrow">Account</p>
-        <h2 class="section-title" id="account-page-title">Manage Your Membership</h2>
-        <p class="subhead">
-          This page uses the same navigation, hero treatment, dark glass panels, and site backdrop
-          as the homepage, while keeping account details readable inside a warm paper card.
-        </p>
-
-        <div class="account-wrap">
+        <div class="grid">
           <div class="paper">
-            <h3>Membership Record</h3>
-
-            <div class="paper-grid">
-              <div class="block">
-                <h4>Profile Information</h4>
-                <div class="rows">
-                  <div class="row">
-                    <div class="label">Name</div>
-                    <div class="value">John Doe</div>
-                  </div>
-                  <div class="row">
-                    <div class="label">Email</div>
-                    <div class="value">john@example.com</div>
-                  </div>
-                  <div class="row">
-                    <div class="label">Member ID</div>
-                    <div class="value">AF-10245</div>
-                  </div>
-                  <div class="row">
-                    <div class="label">Preferred Contact</div>
-                    <div class="value">Email</div>
-                  </div>
-                </div>
+            <div class="paper-top">
+              <div>
+                <p class="eyebrow" style="color:#544533; margin-bottom:8px;">Astral Forge Account</p>
+                <h2 id="account-title">One Account. Every World You Enter.</h2>
               </div>
-
-              <div class="block">
-                <h4>Membership Status</h4>
-                <div class="rows">
-                  <div class="row">
-                    <div class="label">Plan</div>
-                    <div class="value">Free Membership</div>
-                  </div>
-                  <div class="row">
-                    <div class="label">Status</div>
-                    <div class="value">
-                      <span class="status"><span class="status-dot"></span>Active</span>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="label">Alerts</div>
-                    <div class="value">Campaigns, Shop Drops, Codex</div>
-                  </div>
-                  <div class="row">
-                    <div class="label">Frequency</div>
-                    <div class="value">As things happen</div>
-                  </div>
-                </div>
+              <div class="status-pill">
+                <span class="dot"></span>
+                Stripe-Linked Billing Ready
               </div>
             </div>
 
-            <div style="height:18px;"></div>
+            <p>
+              This is the front door for customer accounts on Astral Forge. Instead of showing fake member data,
+              this page should guide visitors into the real account flow: create an account, sign in, manage billing,
+              review purchases, and eventually access their campaign and digital library tools.
+            </p>
 
-            <div class="paper-grid">
-              <div class="block">
-                <h4>Notification Preferences</h4>
-                <div class="rows">
-                  <div class="row">
-                    <div class="label">Campaign Openings</div>
-                    <div class="value">Enabled</div>
-                  </div>
-                  <div class="row">
-                    <div class="label">Shop Drops</div>
-                    <div class="value">Enabled</div>
-                  </div>
-                  <div class="row">
-                    <div class="label">Codex Articles</div>
-                    <div class="value">Enabled</div>
-                  </div>
-                </div>
+            <div class="feature-grid">
+              <div class="paper-block">
+                <h3>Create an Account</h3>
+                <p>
+                  New players and customers can register here before booking games, buying products,
+                  or managing notifications across the Astral Forge network.
+                </p>
               </div>
 
-              <div class="block">
-                <h4>Notes</h4>
-                <div class="note">
-                  <h5>What this account is for</h5>
-                  <p>
-                    Your membership record keeps your contact details, alert preferences,
-                    and opt-in status tied to Astral Forge campaigns and site updates.
-                  </p>
-                </div>
+              <div class="paper-block">
+                <h3>Sign In Securely</h3>
+                <p>
+                  Returning users should be able to access their profile, orders, downloads, and
+                  billing tools from a single centralized login point.
+                </p>
+              </div>
+
+              <div class="paper-block">
+                <h3>Manage Billing</h3>
+                <p>
+                  Connect this area to Stripe’s customer portal so users can update payment methods,
+                  view invoices, and manage subscription-style billing without touching the admin panel.
+                </p>
+              </div>
+
+              <div class="paper-block">
+                <h3>View Purchases</h3>
+                <p>
+                  Over time, this can become the home for PDFs, future digital products, campaign receipts,
+                  and account-linked perks.
+                </p>
               </div>
             </div>
 
             <div class="paper-actions">
-              <a class="paper-btn primary" href="/membership/">Edit Preferences</a>
-              <a class="paper-btn" href="/membership/">Update Contact Info</a>
-              <a class="paper-btn" href="/legal/privacy/">Privacy</a>
-              <a class="paper-btn danger" href="/membership/opt-out/">Opt Out</a>
+              <a class="paper-btn primary" href="/create-account/">Create Account</a>
+              <a class="paper-btn" href="/sign-in/">Sign In</a>
+              <a class="paper-btn" href="/billing/">Manage Billing</a>
+              <a class="paper-btn" href="/orders/">Orders & Downloads</a>
             </div>
           </div>
 
-          <aside class="side-stack">
-            <div class="glass-card">
-              <h4>Quick Links</h4>
-              <div class="mini-list">
-                <div class="mini-item">
-                  <strong>Membership</strong>
-                  Update alerts and contact preferences.
+          <aside class="stack">
+            <div class="glass">
+              <h3>Account Paths</h3>
+              <div class="auth-grid">
+                <div class="auth-tile">
+                  <strong>New Here?</strong>
+                  Create an account before checkout, booking, or download access.
                 </div>
-                <div class="mini-item">
-                  <strong>Privacy</strong>
-                  Read how account data is handled.
+                <div class="auth-tile">
+                  <strong>Already Joined?</strong>
+                  Sign in to return to your account dashboard and billing tools.
                 </div>
-                <div class="mini-item">
-                  <strong>Terms</strong>
-                  Review site and membership terms.
-                </div>
+              </div>
+
+              <div class="mini-links">
+                <a class="btn" href="/create-account/">Create</a>
+                <a class="btn" href="/sign-in/">Sign In</a>
               </div>
             </div>
 
-            <div class="glass-card">
-              <h4>Current Delivery</h4>
+            <div class="glass">
+              <h3>Connected Worlds</h3>
+              <div class="path-list">
+                <div class="path-item">
+                  <strong>Play</strong>
+                  Browse campaigns, then hand off to Account when login is required.
+                </div>
+                <div class="path-item">
+                  <strong>Shop</strong>
+                  Browse products, then link checkout and purchase history back here.
+                </div>
+                <div class="path-item">
+                  <strong>Codex</strong>
+                  Public reading stays open, while account-linked features can route here later.
+                </div>
+              </div>
+
+              <div class="mini-links">
+                <a class="btn" href="https://play.astralforge.studio">Play</a>
+                <a class="btn" href="https://shop.astralforge.studio">Shop</a>
+                <a class="btn" href="https://codex.astralforge.studio">Codex</a>
+              </div>
+            </div>
+
+            <div class="glass">
+              <h3>Planned Dashboard Features</h3>
               <ul>
-                <li>Email notifications for account and membership updates.</li>
-                <li>Campaign alerts when seats or launches become available.</li>
-                <li>Codex and shop announcements based on your current opt-in settings.</li>
+                <li>Profile and contact settings</li>
+                <li>Order history and digital downloads</li>
+                <li>Stripe-linked billing management</li>
+                <li>Campaign participation and future perks</li>
+                <li>Notification and membership preferences</li>
               </ul>
             </div>
-
-            <div class="glass-card">
-              <h4>Connected Worlds</h4>
-              <p>
-                Jump back into the live experience from your account area.
-              </p>
-              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-                <a class="btn" href="https://play.astralforge.studio" target="_blank" rel="noopener">Play</a>
-                <a class="btn" href="https://codex.astralforge.studio" target="_blank" rel="noopener">Codex</a>
-              </div>
-            </div>
           </aside>
+        </div>
+
+        <div class="info-strip">
+          <div class="info-card">
+            <h3>Centralized Login</h3>
+            <p>
+              Keep account creation and sign-in here on the account subdomain instead of scattering auth across
+              shop, play, and codex.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h3>Cleaner UX</h3>
+            <p>
+              Visitors can browse freely elsewhere, then come here only when identity, purchases,
+              or billing actually matter.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h3>Ready to Expand</h3>
+            <p>
+              This structure gives you room for dashboards, digital libraries, subscriptions,
+              and customer tools later without rebuilding the front door.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -706,10 +752,11 @@
     <footer class="footer">
       <div class="footer-inner">
         <div>© 2026 Astral Forge</div>
-        <div>
-          <a href="/contact/">Contact</a>
-          <a href="/legal/privacy/">Privacy</a>
-          <a href="/legal/terms/">Terms</a>
+
+        <div class="footer-links">
+          <a href="https://astralforge.studio/contact/">Contact</a>
+          <a href="https://astralforge.studio/legal/privacy/">Privacy</a>
+          <a href="https://astralforge.studio/legal/terms/">Terms</a>
           <a href="https://rootapp.gg/AC05WwIOhgqvSevEYNE_4Q" target="_blank" rel="noopener">Root</a>
         </div>
       </div>
