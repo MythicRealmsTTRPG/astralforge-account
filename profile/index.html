@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astral Forge | Profile</title>
+  <meta
+    name="description"
+    content="Manage your Astral Forge profile, account details, and personal preferences."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="icon" type="image/png" href="/assets/nav/favicon.png" />
+
+  <style>
+    :root{
+      --bg:#0b0b0d;
+      --panel:rgba(10,10,12,.82);
+      --panel-soft:rgba(255,255,255,.03);
+      --text:rgba(255,255,255,.94);
+      --muted:rgba(255,255,255,.72);
+      --soft:rgba(255,255,255,.58);
+      --border:rgba(255,255,255,.10);
+      --border-2:rgba(255,255,255,.16);
+      --ring:rgba(201,168,108,.35);
+      --shadow:0 20px 60px rgba(0,0,0,.42);
+
+      --gold:#c9a86c;
+      --gold-2:#b99054;
+
+      --radius:18px;
+      --sidebar-width:280px;
+      --max:1600px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    html, body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+
+    body{
+      background:
+        linear-gradient(rgba(5,5,8,.88), rgba(5,5,8,.94)),
+        url("/assets/hero/Accounts-Hero.png") center / cover no-repeat fixed;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    img{
+      display:block;
+      max-width:100%;
+      height:auto;
+    }
+
+    button,
+    input,
+    textarea,
+    select{
+      font:inherit;
+    }
+
+    .app{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:var(--sidebar-width) 1fr;
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      background:rgba(0,0,0,.18);
+      backdrop-filter:blur(8px);
+    }
+
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      border-right:1px solid var(--border);
+      background:rgba(8,8,10,.88);
+      backdrop-filter:blur(14px);
+      padding:22px 18px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .brand-wrap{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:4px 6px 14px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .brand-wrap img{
+      width:auto;
+      height:40px;
+    }
+
+    .brand-copy strong{
+      display:block;
+      font-family:'Cinzel',serif;
+      font-size:17px;
+      font-weight:600;
+      letter-spacing:.5px;
+    }
+
+    .brand-copy span{
+      display:block;
+      margin-top:4px;
+      color:var(--soft);
+      font-size:12px;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+    }
+
+    .account-chip{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(201,168,108,.10), rgba(255,255,255,.03));
+      box-shadow:var(--shadow);
+    }
+
+    .avatar{
+      width:46px;
+      height:46px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      color:#21170f;
+      background:linear-gradient(180deg, #d9bd87, #b99054);
+      border:1px solid rgba(255,255,255,.18);
+      flex-shrink:0;
+    }
+
+    .account-chip strong{
+      display:block;
+      font-size:14px;
+      color:#fff;
+    }
+
+    .account-chip span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12.5px;
+    }
+
+    .nav-section{
+      display:grid;
+      gap:8px;
+    }
+
+    .nav-label{
+      padding:0 10px;
+      margin:4px 0 2px;
+      font-size:11px;
+      letter-spacing:.9px;
+      text-transform:uppercase;
+      color:var(--soft);
+    }
+
+    .nav-link{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      color:rgba(255,255,255,.82);
+      border:1px solid transparent;
+      transition:.16s ease;
+    }
+
+    .nav-link:hover{
+      background:rgba(255,255,255,.05);
+      border-color:rgba(255,255,255,.06);
+      color:#fff;
+    }
+
+    .nav-link.active{
+      background:rgba(201,168,108,.12);
+      border-color:rgba(201,168,108,.28);
+      color:#f6e6c4;
+    }
+
+    .sidebar-footer{
+      margin-top:auto;
+      display:grid;
+      gap:10px;
+      padding-top:16px;
+      border-top:1px solid var(--border);
+    }
+
+    .sidebar-footer a{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .sidebar-footer a:hover{
+      color:#fff;
+      background:rgba(255,255,255,.04);
+    }
+
+    .main{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 24px;
+      border-bottom:1px solid var(--border);
+      background:rgba(8,8,10,.76);
+      backdrop-filter:blur(14px);
+    }
+
+    .topbar-left h1{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:clamp(28px,3vw,40px);
+      line-height:1.05;
+      letter-spacing:.2px;
+    }
+
+    .topbar-left p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .topbar-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:42px;
+      padding:10px 15px;
+      border-radius:999px;
+      border:1px solid var(--border-2);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-size:14px;
+      font-weight:600;
+      cursor:pointer;
+      transition:.16s ease;
+    }
+
+    .btn:hover{
+      background:rgba(255,255,255,.10);
+    }
+
+    .btn.primary{
+      color:#1e160d;
+      background:linear-gradient(180deg, #d8bb86, #b99054);
+      border-color:rgba(255,255,255,.20);
+    }
+
+    .btn.ghost{
+      background:rgba(255,255,255,.03);
+    }
+
+    .content{
+      padding:24px;
+      display:grid;
+      gap:22px;
+    }
+
+    .hero-panel{
+      overflow:hidden;
+      border-radius:24px;
+      border:1px solid var(--border);
+      background:
+        radial-gradient(circle at 85% 18%, rgba(201,168,108,.16), transparent 26%),
+        linear-gradient(135deg, rgba(201,168,108,.10), rgba(255,255,255,.03)),
+        rgba(8,8,10,.72);
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+
+    .hero-panel h2{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:clamp(28px,3vw,42px);
+      line-height:1.08;
+    }
+
+    .hero-panel p{
+      margin:14px 0 0;
+      max-width:70ch;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.72;
+    }
+
+    .hero-actions{
+      margin-top:20px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:22px;
+      align-items:start;
+    }
+
+    .stack{
+      display:grid;
+      gap:22px;
+    }
+
+    .panel{
+      border:1px solid var(--border);
+      border-radius:20px;
+      background:var(--panel);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .panel-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px 20px;
+      border-bottom:1px solid var(--border);
+      background:rgba(255,255,255,.02);
+      flex-wrap:wrap;
+    }
+
+    .panel-head h3{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:24px;
+      font-weight:400;
+    }
+
+    .panel-head p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .panel-body{
+      padding:18px 20px 20px;
+      display:grid;
+      gap:16px;
+    }
+
+    .profile-shell{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      padding:16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:var(--panel-soft);
+    }
+
+    .profile-avatar{
+      width:72px;
+      height:72px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      font-size:22px;
+      font-weight:700;
+      color:#21170f;
+      background:linear-gradient(180deg, #d9bd87, #b99054);
+      border:1px solid rgba(255,255,255,.18);
+      flex-shrink:0;
+    }
+
+    .profile-shell h4{
+      margin:0;
+      font-size:18px;
+      color:#fff;
+    }
+
+    .profile-shell p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    .field label{
+      font-size:12px;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      color:var(--soft);
+    }
+
+    .field input,
+    .field textarea,
+    .field select{
+      width:100%;
+      min-height:46px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+    }
+
+    .field textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder{
+      color:rgba(255,255,255,.38);
+    }
+
+    .field input:focus-visible,
+    .field textarea:focus-visible,
+    .field select:focus-visible{
+      outline:none;
+      box-shadow:0 0 0 3px var(--ring);
+    }
+
+    .help{
+      color:var(--soft);
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .info-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .info-item{
+      padding:16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:var(--panel-soft);
+    }
+
+    .info-item strong{
+      display:block;
+      font-size:15px;
+      color:#fff;
+    }
+
+    .info-item p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    .status-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .status-row:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+
+    .status-row span:first-child{
+      color:var(--soft);
+      font-size:13px;
+    }
+
+    .status-row span:last-child{
+      color:#fff;
+      font-size:13px;
+      font-weight:600;
+      text-align:right;
+    }
+
+    .mobile-top{
+      display:none;
+    }
+
+    @media (max-width: 1180px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 920px){
+      body{
+        background-attachment:scroll;
+      }
+
+      .app{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        display:none;
+      }
+
+      .mobile-top{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+        padding:14px 18px;
+        border-bottom:1px solid var(--border);
+        background:rgba(8,8,10,.84);
+        backdrop-filter:blur(12px);
+      }
+
+      .mobile-top a{
+        display:flex;
+        align-items:center;
+        gap:10px;
+      }
+
+      .mobile-top img{
+        height:34px;
+        width:auto;
+      }
+
+      .topbar{
+        position:relative;
+        top:auto;
+      }
+    }
+
+    @media (max-width: 640px){
+      .content,
+      .topbar{
+        padding:18px;
+      }
+
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .topbar-actions{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero-panel,
+      .panel{
+        border-radius:18px;
+      }
+
+      .panel-head h3{
+        font-size:22px;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .profile-shell{
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-top">
+    <a href="/" aria-label="Astral Forge account dashboard">
+      <img src="/assets/nav/Astral-Forge-nav.png" alt="Astral Forge">
+      <strong style="font-family:'Cinzel',serif; font-weight:600;">Astral Forge</strong>
+    </a>
+    <a class="btn ghost" href="/sign-in/">Sign Out</a>
+  </div>
+
+  <div class="app">
+    <aside class="sidebar" aria-label="Profile navigation">
+      <div class="brand-wrap">
+        <a href="/" style="display:flex; align-items:center; gap:12px;">
+          <img src="/assets/nav/Astral-Forge-nav.png" alt="Astral Forge">
+        </a>
+        <div class="brand-copy">
+          <strong>Astral Forge</strong>
+          <span>Account Dashboard</span>
+        </div>
+      </div>
+
+      <div class="account-chip">
+        <div class="avatar">--</div>
+        <div>
+          <strong>Your Account</strong>
+          <span>Not loaded</span>
+        </div>
+      </div>
+
+      <nav class="nav-section">
+        <div class="nav-label">Overview</div>
+        <a class="nav-link" href="/">
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-link" href="/orders/">
+          <span>Orders</span>
+        </a>
+        <a class="nav-link" href="/downloads/">
+          <span>Downloads</span>
+        </a>
+        <a class="nav-link" href="/billing/">
+          <span>Billing</span>
+        </a>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-label">Account</div>
+        <a class="nav-link active" href="/profile/">
+          <span>Profile</span>
+        </a>
+        <a class="nav-link" href="/security/">
+          <span>Security</span>
+        </a>
+        <a class="nav-link" href="/notifications/">
+          <span>Notifications</span>
+        </a>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-label">Support</div>
+        <a class="nav-link" href="https://astralforge.studio/contact/">
+          <span>Contact Support</span>
+        </a>
+        <a class="nav-link" href="https://astralforge.studio/legal/privacy/">
+          <span>Privacy</span>
+        </a>
+        <a class="nav-link" href="https://astralforge.studio/legal/terms/">
+          <span>Terms</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="https://play.astralforge.studio">Return to Play</a>
+        <a href="https://shop.astralforge.studio">Visit Shop</a>
+        <a href="/sign-in/">Sign Out</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1>Profile</h1>
+          <p>
+            Manage your Astral Forge account details and personal information once your account system is connected.
+          </p>
+        </div>
+
+        <div class="topbar-actions">
+          <a class="btn ghost" href="/">Back to Dashboard</a>
+          <a class="btn ghost" href="/notifications/">Notifications</a>
+          <a class="btn primary" href="/security/">Security</a>
+        </div>
+      </header>
+
+      <section class="content">
+        <section class="hero-panel">
+          <h2>Your account identity lives here.</h2>
+          <p>
+            This page is ready for real profile data without pretending anything is already saved. Once connected,
+            users should be able to update account basics like display name, email, and other personal details from
+            one clean place.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="/security/">Review Security</a>
+            <a class="btn ghost" href="/notifications/">Notification Settings</a>
+          </div>
+        </section>
+
+        <section class="layout">
+          <div class="stack">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Account Details</h3>
+                  <p>Keep the structure real-ready without loading fake profile information.</p>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="profile-shell">
+                  <div class="profile-avatar">--</div>
+                  <div>
+                    <h4>Profile not loaded</h4>
+                    <p>
+                      This area can later reflect the user’s display name, email address, and any other account-linked identity details.
+                    </p>
+                  </div>
+                </div>
+
+                <form class="form-grid">
+                  <div class="field">
+                    <label for="display-name">Display Name</label>
+                    <input id="display-name" name="display-name" type="text" placeholder="Not loaded">
+                  </div>
+
+                  <div class="field">
+                    <label for="email-address">Email Address</label>
+                    <input id="email-address" name="email-address" type="email" placeholder="Not loaded">
+                  </div>
+
+                  <div class="field">
+                    <label for="first-name">First Name</label>
+                    <input id="first-name" name="first-name" type="text" placeholder="Optional">
+                  </div>
+
+                  <div class="field">
+                    <label for="last-name">Last Name</label>
+                    <input id="last-name" name="last-name" type="text" placeholder="Optional">
+                  </div>
+
+                  <div class="field full">
+                    <label for="bio">Bio or Public Note</label>
+                    <textarea id="bio" name="bio" placeholder="Optional profile text for future use"></textarea>
+                    <div class="help">
+                      Leave this out entirely if you want accounts to stay purely functional. Keep it only if you plan to support public-facing creator profiles later.
+                    </div>
+                  </div>
+
+                  <div class="field full">
+                    <label for="timezone">Timezone</label>
+                    <select id="timezone" name="timezone">
+                      <option selected>Select timezone</option>
+                      <option>Central Time</option>
+                      <option>Eastern Time</option>
+                      <option>Mountain Time</option>
+                      <option>Pacific Time</option>
+                    </select>
+                  </div>
+                </form>
+
+                <div class="hero-actions" style="margin-top:2px;">
+                  <button class="btn primary" type="button">Save Changes</button>
+                  <button class="btn ghost" type="button">Reset</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Implementation Notes</h3>
+                  <p>Keep the page honest until real user data is available.</p>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="info-list">
+                  <div class="info-item">
+                    <strong>No fake profile fields</strong>
+                    <p>
+                      This page should pull directly from authenticated account data once your login system is in place, not from hardcoded names or placeholder emails.
+                    </p>
+                  </div>
+
+                  <div class="info-item">
+                    <strong>Email changes may need verification</strong>
+                    <p>
+                      If users can update their login email here, you will probably want a verification flow rather than changing it instantly.
+                    </p>
+                  </div>
+
+                  <div class="info-item">
+                    <strong>Keep profile and security separate</strong>
+                    <p>
+                      Profile should handle identity details. Password changes, sessions, and authentication controls belong in Security.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="stack">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Account Snapshot</h3>
+                  <p>Real values should appear here later.</p>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="status-row">
+                  <span>Display name</span>
+                  <span>—</span>
+                </div>
+                <div class="status-row">
+                  <span>Email address</span>
+                  <span>—</span>
+                </div>
+                <div class="status-row">
+                  <span>Profile status</span>
+                  <span>Not connected</span>
+                </div>
+                <div class="status-row">
+                  <span>Timezone</span>
+                  <span>—</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Related Settings</h3>
+                  <p>Other account pages tied to identity and preferences.</p>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="info-list">
+                  <div class="info-item">
+                    <strong>Security</strong>
+                    <p>
+                      Password updates, authentication settings, and future session management should live there instead of on this page.
+                    </p>
+                  </div>
+
+                  <div class="info-item">
+                    <strong>Notifications</strong>
+                    <p>
+                      Email preferences and studio communication settings should be managed separately from profile details.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="hero-actions" style="margin-top:2px;">
+                  <a class="btn ghost" href="/notifications/">Notifications</a>
+                  <a class="btn primary" href="/security/">Security</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
