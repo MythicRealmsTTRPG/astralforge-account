@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astral Forge | Orders</title>
+  <meta
+    name="description"
+    content="View your Astral Forge order history, receipts, fulfillment status, downloads, and purchase details."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="icon" type="image/png" href="/assets/nav/favicon.png" />
+
+  <style>
+    :root{
+      --bg:#0b0b0d;
+      --bg-2:#101014;
+      --bg-3:#15151a;
+      --panel:rgba(10,10,12,.82);
+      --panel-2:rgba(255,255,255,.05);
+      --panel-3:rgba(255,255,255,.035);
+      --text:rgba(255,255,255,.94);
+      --muted:rgba(255,255,255,.72);
+      --soft:rgba(255,255,255,.58);
+      --border:rgba(255,255,255,.10);
+      --border-2:rgba(255,255,255,.16);
+      --ring:rgba(201,168,108,.35);
+      --shadow:0 20px 60px rgba(0,0,0,.42);
+
+      --gold:#c9a86c;
+      --gold-2:#b99054;
+      --gold-3:#8a6737;
+      --success:#76c893;
+      --warn:#e9c46a;
+      --danger:#e76f51;
+      --info:#7fb3ff;
+
+      --radius:18px;
+      --radius-sm:12px;
+      --sidebar-width:280px;
+      --max:1600px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    html, body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+
+    body{
+      background:
+        linear-gradient(rgba(5,5,8,.88), rgba(5,5,8,.94)),
+        url("/assets/hero/Astral-Forge-hero.png") center / cover no-repeat fixed;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    img{
+      display:block;
+      max-width:100%;
+      height:auto;
+    }
+
+    button,
+    input,
+    select{
+      font:inherit;
+    }
+
+    .app{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:var(--sidebar-width) 1fr;
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      background:rgba(0,0,0,.18);
+      backdrop-filter:blur(8px);
+    }
+
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      border-right:1px solid var(--border);
+      background:rgba(8,8,10,.88);
+      backdrop-filter:blur(14px);
+      padding:22px 18px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .brand-wrap{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:4px 6px 14px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .brand-wrap img{
+      width:auto;
+      height:40px;
+    }
+
+    .brand-copy strong{
+      display:block;
+      font-family:'Cinzel',serif;
+      font-size:17px;
+      font-weight:600;
+      letter-spacing:.5px;
+    }
+
+    .brand-copy span{
+      display:block;
+      margin-top:4px;
+      color:var(--soft);
+      font-size:12px;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+    }
+
+    .account-chip{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(201,168,108,.10), rgba(255,255,255,.03));
+      box-shadow:var(--shadow);
+    }
+
+    .avatar{
+      width:46px;
+      height:46px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      color:#21170f;
+      background:linear-gradient(180deg, #d9bd87, #b99054);
+      border:1px solid rgba(255,255,255,.18);
+      flex-shrink:0;
+    }
+
+    .account-chip strong{
+      display:block;
+      font-size:14px;
+      color:#fff;
+    }
+
+    .account-chip span{
+      display:block;
+      margin-top:4px;
+      color:var(--muted);
+      font-size:12.5px;
+    }
+
+    .nav-section{
+      display:grid;
+      gap:8px;
+    }
+
+    .nav-label{
+      padding:0 10px;
+      margin:4px 0 2px;
+      font-size:11px;
+      letter-spacing:.9px;
+      text-transform:uppercase;
+      color:var(--soft);
+    }
+
+    .nav-link{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      color:rgba(255,255,255,.82);
+      border:1px solid transparent;
+      transition:.16s ease;
+    }
+
+    .nav-link:hover{
+      background:rgba(255,255,255,.05);
+      border-color:rgba(255,255,255,.06);
+      color:#fff;
+    }
+
+    .nav-link.active{
+      background:rgba(201,168,108,.12);
+      border-color:rgba(201,168,108,.28);
+      color:#f6e6c4;
+    }
+
+    .nav-badge{
+      min-width:24px;
+      height:24px;
+      padding:0 8px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:11px;
+      font-weight:700;
+      color:#f4e4c4;
+      background:rgba(201,168,108,.16);
+      border:1px solid rgba(201,168,108,.24);
+    }
+
+    .sidebar-footer{
+      margin-top:auto;
+      display:grid;
+      gap:10px;
+      padding-top:16px;
+      border-top:1px solid var(--border);
+    }
+
+    .sidebar-footer a{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .sidebar-footer a:hover{
+      color:#fff;
+      background:rgba(255,255,255,.04);
+    }
+
+    .main{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .mobile-top{
+      display:none;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 24px;
+      border-bottom:1px solid var(--border);
+      background:rgba(8,8,10,.76);
+      backdrop-filter:blur(14px);
+    }
+
+    .topbar-left h1{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:clamp(28px,3vw,40px);
+      line-height:1.05;
+      letter-spacing:.2px;
+    }
+
+    .topbar-left p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .topbar-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:42px;
+      padding:10px 15px;
+      border-radius:999px;
+      border:1px solid var(--border-2);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-size:14px;
+      font-weight:600;
+      cursor:pointer;
+      transition:.16s ease;
+    }
+
+    .btn:hover{
+      background:rgba(255,255,255,.10);
+    }
+
+    .btn.primary{
+      color:#1e160d;
+      background:linear-gradient(180deg, #d8bb86, #b99054);
+      border-color:rgba(255,255,255,.20);
+    }
+
+    .btn.ghost{
+      background:rgba(255,255,255,.03);
+    }
+
+    .btn.small{
+      min-height:36px;
+      padding:8px 12px;
+      font-size:13px;
+    }
+
+    .content{
+      padding:24px;
+      display:grid;
+      gap:22px;
+    }
+
+    .hero-panel{
+      position:relative;
+      overflow:hidden;
+      border-radius:24px;
+      border:1px solid var(--border);
+      background:
+        radial-gradient(circle at 85% 18%, rgba(201,168,108,.16), transparent 26%),
+        linear-gradient(135deg, rgba(201,168,108,.10), rgba(255,255,255,.03)),
+        rgba(8,8,10,.72);
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+
+    .hero-panel-inner{
+      display:grid;
+      grid-template-columns:1.15fr .95fr;
+      gap:20px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      margin:0 0 10px;
+      font-family:'Cinzel',serif;
+      font-size:12px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.76);
+    }
+
+    .hero-panel h2{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:clamp(28px,3vw,42px);
+      line-height:1.08;
+    }
+
+    .hero-panel p{
+      margin:14px 0 0;
+      max-width:62ch;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.72;
+    }
+
+    .hero-actions{
+      margin-top:20px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .status-card{
+      padding:18px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      display:grid;
+      gap:14px;
+    }
+
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      color:#f6e6c4;
+      border:1px solid rgba(201,168,108,.25);
+      background:rgba(201,168,108,.10);
+    }
+
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--success);
+      display:inline-block;
+    }
+
+    .status-list{
+      display:grid;
+      gap:10px;
+    }
+
+    .status-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font-size:13px;
+    }
+
+    .status-row:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+
+    .status-row span:first-child{
+      color:var(--soft);
+    }
+
+    .status-row span:last-child{
+      color:#fff;
+      font-weight:600;
+      text-align:right;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .stat{
+      padding:20px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      box-shadow:var(--shadow);
+    }
+
+    .stat .label{
+      color:var(--soft);
+      font-size:12px;
+      letter-spacing:.8px;
+      text-transform:uppercase;
+    }
+
+    .stat .value{
+      margin-top:10px;
+      font-family:Georgia,serif;
+      font-size:34px;
+      line-height:1;
+    }
+
+    .stat .sub{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:22px;
+      align-items:start;
+    }
+
+    .stack{
+      display:grid;
+      gap:22px;
+    }
+
+    .panel{
+      border:1px solid var(--border);
+      border-radius:20px;
+      background:var(--panel);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .panel-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px 20px;
+      border-bottom:1px solid var(--border);
+      background:rgba(255,255,255,.02);
+    }
+
+    .panel-head h3{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:24px;
+      font-weight:400;
+    }
+
+    .panel-head p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .panel-body{
+      padding:18px 20px 20px;
+    }
+
+    .filters{
+      display:grid;
+      grid-template-columns:1.3fr .8fr .8fr .8fr;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .control{
+      display:grid;
+      gap:8px;
+    }
+
+    .control label{
+      font-size:12px;
+      font-weight:600;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      color:var(--soft);
+    }
+
+    .control input,
+    .control select{
+      width:100%;
+      min-height:44px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      outline:none;
+    }
+
+    .control input:focus,
+    .control select:focus{
+      box-shadow:0 0 0 3px var(--ring);
+      border-color:rgba(201,168,108,.35);
+    }
+
+    .order-list{
+      display:grid;
+      gap:14px;
+    }
+
+    .order{
+      padding:18px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+      display:grid;
+      gap:14px;
+    }
+
+    .order-top{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+
+    .order-id{
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      color:var(--soft);
+    }
+
+    .order-title{
+      margin-top:6px;
+      font-size:18px;
+      font-weight:700;
+      color:#fff;
+    }
+
+    .order-meta{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:28px;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      white-space:nowrap;
+    }
+
+    .pill.success{
+      color:#dff7e7;
+      background:rgba(118,200,147,.12);
+      border-color:rgba(118,200,147,.28);
+    }
+
+    .pill.warn{
+      color:#f4e4b8;
+      background:rgba(233,196,106,.12);
+      border-color:rgba(233,196,106,.28);
+    }
+
+    .pill.gold{
+      color:#f6e6c4;
+      background:rgba(201,168,108,.12);
+      border-color:rgba(201,168,108,.28);
+    }
+
+    .pill.info{
+      color:#dbe8ff;
+      background:rgba(127,179,255,.12);
+      border-color:rgba(127,179,255,.28);
+    }
+
+    .order-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+
+    .mini-stat{
+      padding:14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+    }
+
+    .mini-stat .k{
+      font-size:11px;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+      color:var(--soft);
+    }
+
+    .mini-stat .v{
+      margin-top:8px;
+      font-size:14px;
+      font-weight:700;
+      color:#fff;
+    }
+
+    .order-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .notice{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid rgba(201,168,108,.20);
+      background:rgba(201,168,108,.08);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    .notice strong{
+      color:#fff;
+    }
+
+    .kv-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .kv-row{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .kv-row:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+
+    .kv-key{
+      color:var(--soft);
+      font-size:13px;
+    }
+
+    .kv-value{
+      text-align:right;
+      font-size:13px;
+      color:#fff;
+      font-weight:600;
+    }
+
+    .item-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .item{
+      display:grid;
+      gap:8px;
+      padding:16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+    }
+
+    .item h4{
+      margin:0;
+      font-size:15px;
+      color:#fff;
+    }
+
+    .item p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    @media (max-width: 1240px){
+      .stats{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .layout,
+      .hero-panel-inner{
+        grid-template-columns:1fr;
+      }
+
+      .filters{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .order-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (max-width: 920px){
+      body{
+        background-attachment:scroll;
+      }
+
+      .app{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        display:none;
+      }
+
+      .mobile-top{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+        padding:14px 18px;
+        border-bottom:1px solid var(--border);
+        background:rgba(8,8,10,.84);
+        backdrop-filter:blur(12px);
+      }
+
+      .mobile-top a{
+        display:flex;
+        align-items:center;
+        gap:10px;
+      }
+
+      .mobile-top img{
+        height:34px;
+        width:auto;
+      }
+
+      .topbar{
+        position:relative;
+        top:auto;
+      }
+    }
+
+    @media (max-width: 640px){
+      .content,
+      .topbar{
+        padding:18px;
+      }
+
+      .stats,
+      .filters,
+      .order-grid{
+        grid-template-columns:1fr;
+      }
+
+      .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .topbar-actions{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero-panel,
+      .stat,
+      .panel,
+      .order{
+        border-radius:18px;
+      }
+
+      .panel-head h3{
+        font-size:22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-top">
+    <a href="/" aria-label="Astral Forge account">
+      <img src="/assets/nav/Astral-Forge-nav.png" alt="Astral Forge">
+      <strong style="font-family:'Cinzel',serif; font-weight:600;">Astral Forge</strong>
+    </a>
+    <a class="btn ghost" href="/sign-in/">Sign Out</a>
+  </div>
+
+  <div class="app">
+    <aside class="sidebar" aria-label="Account navigation">
+      <div class="brand-wrap">
+        <a href="/" style="display:flex; align-items:center; gap:12px;">
+          <img src="/assets/nav/Astral-Forge-nav.png" alt="Astral Forge">
+        </a>
+        <div class="brand-copy">
+          <strong>Astral Forge</strong>
+          <span>Order History</span>
+        </div>
+      </div>
+
+      <div class="account-chip">
+        <div class="avatar">AF</div>
+        <div>
+          <strong>Scribe</strong>
+          <span>scribe@astralforge.studio</span>
+        </div>
+      </div>
+
+      <nav class="nav-section">
+        <div class="nav-label">Overview</div>
+        <a class="nav-link" href="/">
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-link active" href="/orders/">
+          <span>Orders</span>
+          <span class="nav-badge">3</span>
+        </a>
+        <a class="nav-link" href="/downloads/">
+          <span>Downloads</span>
+          <span class="nav-badge">5</span>
+        </a>
+        <a class="nav-link" href="/billing/">
+          <span>Billing</span>
+        </a>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-label">Account</div>
+        <a class="nav-link" href="/profile/">
+          <span>Profile</span>
+        </a>
+        <a class="nav-link" href="/security/">
+          <span>Security</span>
+        </a>
+        <a class="nav-link" href="/notifications/">
+          <span>Notifications</span>
+        </a>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-label">Support</div>
+        <a class="nav-link" href="https://astralforge.studio/contact/">
+          <span>Contact Support</span>
+        </a>
+        <a class="nav-link" href="https://astralforge.studio/legal/privacy/">
+          <span>Privacy</span>
+        </a>
+        <a class="nav-link" href="https://astralforge.studio/legal/terms/">
+          <span>Terms</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="https://shop.astralforge.studio">Visit Shop</a>
+        <a href="/billing/">Manage Billing</a>
+        <a href="/sign-in/">Sign Out</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1>Your Orders</h1>
+          <p>
+            Review purchases, receipts, fulfillment status, and access paths for both digital and physical products.
+          </p>
+        </div>
+
+        <div class="topbar-actions">
+          <a class="btn ghost" href="/billing/">Billing</a>
+          <a class="btn primary" href="https://shop.astralforge.studio">Continue Shopping</a>
+        </div>
+      </header>
+
+      <section class="content">
+        <section class="hero-panel">
+          <div class="hero-panel-inner">
+            <div>
+              <p class="eyebrow">Astral Forge Orders</p>
+              <h2>Your purchase history, clean and easy to scan.</h2>
+              <p>
+                This page gives customers one trusted record of what they bought, when they bought it,
+                what state it is in now, and where to go next for receipts, downloads, or shipping details.
+              </p>
+
+              <div class="hero-actions">
+                <a class="btn primary" href="/downloads/">Open Library</a>
+                <a class="btn ghost" href="/billing/">Manage Billing</a>
+              </div>
+            </div>
+
+            <div class="status-card">
+              <div class="status-pill">
+                <span class="dot"></span>
+                Order History Active
+              </div>
+
+              <div class="status-list">
+                <div class="status-row">
+                  <span>Total orders</span>
+                  <span>3</span>
+                </div>
+                <div class="status-row">
+                  <span>Digital deliveries</span>
+                  <span>2 ready</span>
+                </div>
+                <div class="status-row">
+                  <span>Physical shipments</span>
+                  <span>1 processing</span>
+                </div>
+                <div class="status-row">
+                  <span>Most recent purchase</span>
+                  <span>Mar 24, 2026</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="stats" aria-label="Order summary">
+          <article class="stat">
+            <div class="label">Total Orders</div>
+            <div class="value">03</div>
+            <div class="sub">Full purchase history tied to this account.</div>
+          </article>
+
+          <article class="stat">
+            <div class="label">Digital Products</div>
+            <div class="value">02</div>
+            <div class="sub">Downloads available now through your library.</div>
+          </article>
+
+          <article class="stat">
+            <div class="label">Physical Orders</div>
+            <div class="value">01</div>
+            <div class="sub">Tracked separately with fulfillment status.</div>
+          </article>
+
+          <article class="stat">
+            <div class="label">Receipts Ready</div>
+            <div class="value">Yes</div>
+            <div class="sub">Use orders or billing to retrieve proof of purchase.</div>
+          </article>
+        </section>
+
+        <section class="layout">
+          <div class="stack">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Order History</h3>
+                  <p>Filterable transaction records for digital, physical, and experience purchases.</p>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="filters">
+                  <div class="control">
+                    <label for="orderSearch">Search</label>
+                    <input id="orderSearch" type="text" placeholder="Search by title, order number, or type...">
+                  </div>
+
+                  <div class="control">
+                    <label for="orderType">Type</label>
+                    <select id="orderType">
+                      <option>All Types</option>
+                      <option>Digital</option>
+                      <option>Physical</option>
+                      <option>Booking</option>
+                    </select>
+                  </div>
+
+                  <div class="control">
+                    <label for="orderStatus">Status</label>
+                    <select id="orderStatus">
+                      <option>All Statuses</option>
+                      <option>Delivered</option>
+                      <option>Processing</option>
+                      <option>Confirmed</option>
+                      <option>Archived</option>
+                    </select>
+                  </div>
+
+                  <div class="control">
+                    <label for="orderSort">Sort</label>
+                    <select id="orderSort">
+                      <option>Newest First</option>
+                      <option>Oldest First</option>
+                      <option>Highest Total</option>
+                      <option>Lowest Total</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="order-list">
+                  <article class="order">
+                    <div class="order-top">
+                      <div>
+                        <div class="order-id">Order #AF-1042</div>
+                        <div class="order-title">Black Star Gambit PDF</div>
+                        <div class="order-meta">
+                          Digital Product • Purchased March 24, 2026 • Paid via Visa ending in 4242
+                        </div>
+                      </div>
+                      <span class="pill success">Delivered</span>
+                    </div>
+
+                    <div class="order-grid">
+                      <div class="mini-stat">
+                        <div class="k">Total</div>
+                        <div class="v">$14.99</div>
+                      </div>
+                      <div class="mini-stat">
+                        <div class="k">Delivery</div>
+                        <div class="v">Digital Download</div>
+                      </div>
+                      <div class="mini-stat">
+                        <div class="k">Receipt</div>
+                        <div class="v">Available</div>
+                      </div>
+                      <div class="mini-stat">
+                        <div class="k">Library Access</div>
+                        <div class="v">Ready</div>
+                      </div>
+                    </div>
+
+                    <div class="order-actions">
+                      <a class="btn small primary" href="/downloads/">Download</a>
+                      <a class="btn small" href="/billing/">Receipt</a>
+                      <a class="btn small" href="#">Order Details</a>
+                    </div>
+                  </article>
+
+                  <article class="order">
+                    <div class="order-top">
+                      <div>
+                        <div class="order-id">Order #AF-1018</div>
+                        <div class="order-title">Astral Forge Dice Set</div>
+                        <div class="order-meta">
+                          Physical Product • Purchased March 12, 2026 • Paid via Visa ending in 4242
+                        </div>
+                      </div>
+                      <span class="pill warn">Processing</span>
+                    </div>
+
+                    <div class="order-grid">
+                      <div class="mini-stat">
+                        <div class="k">Total</div>
+                        <div class="v">$38.00</div>
+                      </div>
+                      <div class="mini-stat">
+                        <div class="k">Delivery</div>
+                        <div class="v">Shipment Pending</div>
+                      </div>
+                      <div class="mini-stat">
+                        <div class="k">Tracking</div>
+                        <div class="v">Not Yet Posted</div>
+                      </div>
+                      <div class="mini-stat">
+                        <div class="k">Receipt</div>
+                        <div class="v">Available</div>
+                      </div>
+                    </div>
+
+                    <div class="order-actions">
+                      <a class="btn small" href="#">Track Order</a>
+                      <a class="btn small" href="/billing/">Receipt</a>
+                      <a class="btn small" href="https://astralforge.studio/contact/">Support</a>
+                    </div>
+                  </article>
+
+                  <article class="order">
+                    <div class="order-top">
+                      <div>
+                        <div class="order-id">Order #AF-0986</div>
+                        <div class="order-title">Threads of Fate Session Access</div>
+                        <div class="order-meta">
+                          Booking • Purchased February 28, 2026 • Access linked to campaign participation
+                        </div>
+                      </div>
+                      <span class="pill gold">Confirmed</span>
+                    </div>
+
+                    <div class="order-grid">
+                      <div class="mini-stat">
+                        <div class="k">Total</div>
+                        <div class="v">$25.00</div>
+                      </div>
+                      <div class="mini-stat">
+                        <div class="k">Type</div>
+                        <div class="v">Game Access</div>
+                      </div>
+                      <div class="mini-stat">
+                        <div class="k">Receipt</div>
+                        <div class="v">Available</div>
+                      </div>
+                      <div class="mini-stat">
+                        <div class="k">Destination</div>
+                        <div class="v">Play Portal</div>
+                      </div>
+                    </div>
+
+                    <div class="order-actions">
+                      <a class="btn small primary" href="https://play.astralforge.studio">Go to Play</a>
+                      <a class="btn small" href="/billing/">Receipt</a>
+                      <a class="btn small" href="#">Order Details</a>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Order Notes</h3>
+                  <p>Useful guidance for edge cases and customer expectations.</p>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="notice">
+                  <span class="dot" style="margin-top:6px;"></span>
+                  <div>
+                    <strong>Best pattern:</strong> digital items should route toward `/downloads/`, while payment proofs and invoice history can also be retrieved through `/billing/`.
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="stack">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Quick Summary</h3>
+                  <p>One-glance account order snapshot.</p>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="kv-list">
+                  <div class="kv-row">
+                    <div class="kv-key">Latest order</div>
+                    <div class="kv-value">Black Star Gambit PDF</div>
+                  </div>
+                  <div class="kv-row">
+                    <div class="kv-key">Latest order date</div>
+                    <div class="kv-value">Mar 24, 2026</div>
+                  </div>
+                  <div class="kv-row">
+                    <div class="kv-key">Digital items ready</div>
+                    <div class="kv-value">2</div>
+                  </div>
+                  <div class="kv-row">
+                    <div class="kv-key">Physical items processing</div>
+                    <div class="kv-value">1</div>
+                  </div>
+                  <div class="kv-row">
+                    <div class="kv-key">Outstanding issues</div>
+                    <div class="kv-value">None</div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Common Actions</h3>
+                  <p>Where people usually need to go next.</p>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="item-list">
+                  <div class="item">
+                    <h4>Open Downloads</h4>
+                    <p>For PDFs, digital packs, and other ready-to-deliver products.</p>
+                    <div>
+                      <a class="btn small" href="/downloads/">Open Library</a>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <h4>Manage Billing</h4>
+                    <p>For invoices, receipts, payment methods, and portal access.</p>
+                    <div>
+                      <a class="btn small" href="/billing/">Billing</a>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <h4>Need Support?</h4>
+                    <p>For missing deliveries, damaged goods, or fulfillment issues.</p>
+                    <div>
+                      <a class="btn small" href="https://astralforge.studio/contact/">Contact Support</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <h3>Implementation Notes</h3>
+                  <p>Good backend behavior for this page.</p>
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <div class="kv-list">
+                  <div class="kv-row">
+                    <div class="kv-key">Guest access</div>
+                    <div class="kv-value">Redirect to /sign-in/</div>
+                  </div>
+                  <div class="kv-row">
+                    <div class="kv-key">Order details route</div>
+                    <div class="kv-value">/orders/[order-id]/</div>
+                  </div>
+                  <div class="kv-row">
+                    <div class="kv-key">Digital fulfillment</div>
+                    <div class="kv-value">Tie to /downloads/</div>
+                  </div>
+                  <div class="kv-row">
+                    <div class="kv-key">Receipt access</div>
+                    <div class="kv-value">Orders + Billing</div>
+                  </div>
+                  <div class="kv-row">
+                    <div class="kv-key">Physical orders</div>
+                    <div class="kv-value">Tracking when available</div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
