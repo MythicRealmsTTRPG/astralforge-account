@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astral Forge | Reset Password</title>
+  <meta
+    name="description"
+    content="Reset your Astral Forge account password and regain access to your dashboard, orders, downloads, and billing tools."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="icon" type="image/png" href="/assets/nav/favicon.png" />
+
+  <style>
+    :root{
+      --bg:#0b0b0d;
+      --bg-2:#111114;
+      --panel:rgba(8,8,10,.78);
+      --panel-2:rgba(255,255,255,.05);
+      --panel-3:rgba(255,255,255,.035);
+      --text:rgba(255,255,255,.94);
+      --muted:rgba(255,255,255,.72);
+      --soft:rgba(255,255,255,.58);
+      --border:rgba(255,255,255,.12);
+      --border-2:rgba(255,255,255,.18);
+      --ring:rgba(201,168,108,.35);
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius-sm:12px;
+      --max:1120px;
+
+      --gold:#c9a86c;
+      --gold-2:#b99054;
+      --gold-deep:#8a6737;
+
+      --success:#76c893;
+      --warn:#e9c46a;
+      --danger:#d46a6a;
+    }
+
+    *{ box-sizing:border-box; }
+
+    html, body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:
+        linear-gradient(rgba(6,6,8,.76), rgba(6,6,8,.88)),
+        url("/assets/backgrounds/Astral-Forge.png") center / cover no-repeat fixed;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    img{
+      max-width:100%;
+      height:auto;
+      display:block;
+    }
+
+    button,
+    input{
+      font:inherit;
+    }
+
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:12px 28px;
+      background:rgba(8,8,10,.76);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .nav-left a{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .nav-left img{
+      height:42px;
+      width:auto;
+    }
+
+    .brand{
+      font-family:'Cinzel',serif;
+      font-size:1.1rem;
+      letter-spacing:.5px;
+      color:#f7f2e8;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a{
+      color:var(--muted);
+      font-size:.96rem;
+      transition:.16s ease;
+    }
+
+    .nav-links a:hover{
+      color:#fff;
+    }
+
+    .nav-links .cta{
+      padding:10px 16px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-weight:600;
+    }
+
+    .page{
+      padding:40px 24px 56px;
+    }
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+    }
+
+    .hero{
+      margin-bottom:22px;
+    }
+
+    .eyebrow{
+      margin:0 0 10px;
+      font-family:'Cinzel',serif;
+      font-size:12px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.76);
+    }
+
+    .hero h1{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:clamp(34px,5vw,56px);
+      line-height:1.03;
+      letter-spacing:.2px;
+    }
+
+    .hero p{
+      max-width:66ch;
+      margin:16px 0 0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.75;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:1fr .95fr;
+      gap:22px;
+      align-items:start;
+    }
+
+    .shell,
+    .glass{
+      border:1px solid var(--border);
+      border-radius:24px;
+      background:var(--panel);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
+
+    .shell{
+      overflow:hidden;
+    }
+
+    .shell-head{
+      padding:22px 24px 18px;
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(201,168,108,.10), rgba(255,255,255,.02));
+    }
+
+    .shell-head h2{
+      margin:0;
+      font-family:Georgia,serif;
+      font-size:30px;
+      font-weight:400;
+    }
+
+    .shell-head p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .shell-body{
+      padding:22px 24px 24px;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+      margin-bottom:14px;
+    }
+
+    .field label{
+      font-size:13px;
+      font-weight:600;
+      color:#f5efe4;
+    }
+
+    .field input{
+      width:100%;
+      min-height:50px;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:#fff;
+      outline:none;
+      transition:border-color .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+
+    .field input::placeholder{
+      color:rgba(255,255,255,.36);
+    }
+
+    .field input:focus{
+      border-color:rgba(201,168,108,.45);
+      background:rgba(255,255,255,.06);
+      box-shadow:0 0 0 3px var(--ring);
+    }
+
+    .helper{
+      margin-top:-2px;
+      font-size:12px;
+      color:var(--soft);
+      line-height:1.55;
+    }
+
+    .notice{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      margin:18px 0 20px;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid rgba(201,168,108,.20);
+      background:rgba(201,168,108,.08);
+    }
+
+    .notice-dot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background:var(--gold);
+      margin-top:5px;
+      flex-shrink:0;
+    }
+
+    .notice p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:48px;
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid var(--border-2);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-size:14px;
+      font-weight:600;
+      cursor:pointer;
+      transition:.16s ease;
+    }
+
+    .btn:hover{
+      background:rgba(255,255,255,.09);
+    }
+
+    .btn.primary{
+      color:#1e160d;
+      background:linear-gradient(180deg, #d8bb86, #b99054);
+      border-color:rgba(255,255,255,.18);
+    }
+
+    .btn.full{
+      width:100%;
+    }
+
+    .divider{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin:18px 0;
+      color:var(--soft);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+
+    .divider::before,
+    .divider::after{
+      content:"";
+      flex:1;
+      height:1px;
+      background:rgba(255,255,255,.10);
+    }
+
+    .links-line{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      text-align:center;
+    }
+
+    .links-line a{
+      color:#f1dfba;
+      font-weight:600;
+    }
+
+    .glass{
+      padding:24px;
+    }
+
+    .panel-title{
+      margin:0 0 12px;
+      font-family:Georgia,serif;
+      font-size:26px;
+      font-weight:400;
+    }
+
+    .panel-copy{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .step-list,
+    .help-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .step,
+    .help{
+      padding:16px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+    }
+
+    .step h3,
+    .help h3{
+      margin:0 0 8px;
+      font-size:15px;
+      color:#fff;
+    }
+
+    .step p,
+    .help p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top:18px;
+      width:max-content;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      color:#f6e6c4;
+      border:1px solid rgba(201,168,108,.25);
+      background:rgba(201,168,108,.10);
+    }
+
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:999px;
+      background:var(--success);
+      display:inline-block;
+    }
+
+    .footer{
+      margin-top:24px;
+      border-top:1px solid var(--border);
+      background:rgba(8,8,10,.42);
+      backdrop-filter:blur(8px);
+    }
+
+    .footer-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:20px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      color:var(--soft);
+      font-size:13px;
+    }
+
+    .footer-links{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .footer-links a:hover{
+      color:#fff;
+    }
+
+    @media (max-width: 960px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 720px){
+      body{
+        background-attachment:scroll;
+      }
+
+      .navbar{
+        padding:12px 18px;
+      }
+
+      .brand{
+        display:none;
+      }
+
+      .page{
+        padding:28px 16px 40px;
+      }
+
+      .shell-head,
+      .shell-body,
+      .glass{
+        padding-left:18px;
+        padding-right:18px;
+      }
+
+      .hero h1{
+        font-size:clamp(30px,8vw,44px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" aria-label="Primary">
+    <div class="nav-left">
+      <a href="https://astralforge.studio" aria-label="Astral Forge home">
+        <img src="/assets/nav/Astral-Forge-nav.png" alt="Astral Forge">
+        <span class="brand">Astral Forge</span>
+      </a>
+    </div>
+
+    <div class="nav-links">
+      <a href="https://play.astralforge.studio">Play</a>
+      <a href="https://codex.astralforge.studio">Codex</a>
+      <a href="https://shop.astralforge.studio">Shop</a>
+      <a href="https://astralforge.studio/about/">About</a>
+      <a class="cta" href="/sign-in/">Sign In</a>
+    </div>
+  </nav>
+
+  <main class="page">
+    <div class="container">
+      <section class="hero" aria-labelledby="forgot-title">
+        <p class="eyebrow">Astral Forge Accounts</p>
+        <h1 id="forgot-title">Reset Your Password</h1>
+        <p>
+          Enter the email address attached to your Astral Forge account and we’ll send you a reset link.
+          Once you’re back in, you’ll return to your dashboard, orders, downloads, and billing tools.
+        </p>
+      </section>
+
+      <section class="layout">
+        <div class="shell">
+          <div class="shell-head">
+            <h2>Recover Account Access</h2>
+            <p>
+              Keep this step simple. One email field, one clear action, and a direct path back to sign in.
+            </p>
+          </div>
+
+          <div class="shell-body">
+            <form action="/api/account/forgot-password" method="post">
+              <div class="field">
+                <label for="email">Email Address</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="you@example.com"
+                  required
+                >
+                <div class="helper">
+                  Use the same email address you used for purchases, downloads, or account registration.
+                </div>
+              </div>
+
+              <div class="notice" aria-live="polite">
+                <span class="notice-dot"></span>
+                <p>
+                  If an account exists for this email, send a password reset link and avoid revealing whether the address is registered.
+                </p>
+              </div>
+
+              <div class="btn-row">
+                <button class="btn primary full" type="submit">Send Reset Link</button>
+              </div>
+
+              <div class="divider">or</div>
+
+              <div class="btn-row">
+                <a class="btn full" href="/sign-in/">Back to Sign In</a>
+              </div>
+
+              <p class="links-line">
+                Need a new account instead?
+                <a href="/create-account/">Create one here</a>.
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <aside class="glass">
+          <h2 class="panel-title">What Happens Next</h2>
+          <p class="panel-copy">
+            The reset flow should be steady and predictable, not stressful.
+          </p>
+
+          <div class="step-list">
+            <div class="step">
+              <h3>1. Enter Your Email</h3>
+              <p>Use the address tied to your Astral Forge account.</p>
+            </div>
+
+            <div class="step">
+              <h3>2. Check Your Inbox</h3>
+              <p>Open the reset email and follow the secure link.</p>
+            </div>
+
+            <div class="step">
+              <h3>3. Choose a New Password</h3>
+              <p>Set a fresh password, then return to sign in and enter your dashboard.</p>
+            </div>
+          </div>
+
+          <div class="status-pill">
+            <span class="dot"></span>
+            Secure Reset Flow
+          </div>
+
+          <div style="margin-top:22px;">
+            <h2 class="panel-title" style="font-size:22px;">Need Help?</h2>
+            <div class="help-list">
+              <div class="help">
+                <h3>No reset email?</h3>
+                <p>Check spam, promotions, or filtered folders before trying again.</p>
+              </div>
+
+              <div class="help">
+                <h3>Wrong address?</h3>
+                <p>Try another email you may have used for purchases or account creation.</p>
+              </div>
+
+              <div class="help">
+                <h3>Still stuck?</h3>
+                <p>
+                  Reach out through
+                  <a href="https://astralforge.studio/contact/">Astral Forge support</a>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© 2026 Astral Forge</div>
+
+      <div class="footer-links">
+        <a href="https://astralforge.studio/contact/">Contact</a>
+        <a href="https://astralforge.studio/legal/privacy/">Privacy</a>
+        <a href="https://astralforge.studio/legal/terms/">Terms</a>
+        <a href="/sign-in/">Sign In</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
