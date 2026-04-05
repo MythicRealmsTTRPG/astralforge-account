@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astral Forge | Security</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="/assets/nav/favicon.png" />
+
+  <style>
+    :root{
+      --bg:#0b0b0d;
+      --panel:rgba(10,10,12,.82);
+      --panel-soft:rgba(255,255,255,.03);
+      --text:#fff;
+      --muted:rgba(255,255,255,.7);
+      --soft:rgba(255,255,255,.5);
+      --border:rgba(255,255,255,.1);
+      --gold:#b99054;
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box;}
+
+    body{
+      margin:0;
+      font-family:'Inter',sans-serif;
+      color:var(--text);
+      background:
+        linear-gradient(rgba(5,5,8,.9), rgba(5,5,8,.95)),
+        url("/assets/hero/Accounts-Hero.png") center/cover no-repeat fixed;
+    }
+
+    .app{
+      display:grid;
+      grid-template-columns:260px 1fr;
+      min-height:100vh;
+    }
+
+    .sidebar{
+      background:rgba(0,0,0,.6);
+      border-right:1px solid var(--border);
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .sidebar img{
+      height:40px;
+    }
+
+    .nav a{
+      display:block;
+      padding:10px;
+      border-radius:10px;
+      color:var(--muted);
+      text-decoration:none;
+    }
+
+    .nav a:hover,
+    .nav a.active{
+      background:rgba(255,255,255,.05);
+      color:#fff;
+    }
+
+    .main{
+      display:flex;
+      flex-direction:column;
+    }
+
+    .topbar{
+      padding:20px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .content{
+      padding:20px;
+      display:grid;
+      gap:20px;
+      max-width:1000px;
+    }
+
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:20px;
+    }
+
+    h1,h2,h3{
+      font-family:'Cinzel',serif;
+      margin:0 0 10px;
+    }
+
+    .muted{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+      margin-top:15px;
+    }
+
+    input{
+      padding:12px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+    }
+
+    input::placeholder{
+      color:rgba(255,255,255,.4);
+    }
+
+    .btn{
+      margin-top:15px;
+      padding:12px;
+      border:none;
+      border-radius:999px;
+      background:linear-gradient(180deg,#d8bb86,#b99054);
+      color:#1e160d;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .info{
+      background:var(--panel-soft);
+      padding:15px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      margin-top:10px;
+    }
+
+    @media(max-width:900px){
+      .app{
+        grid-template-columns:1fr;
+      }
+      .sidebar{
+        display:none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="/">
+      <img src="/assets/nav/Astral-Forge-nav.png" alt="Astral Forge">
+    </a>
+
+    <div class="nav">
+      <a href="/">Dashboard</a>
+      <a href="/orders/">Orders</a>
+      <a href="/downloads/">Downloads</a>
+      <a href="/billing/">Billing</a>
+
+      <hr style="border-color:rgba(255,255,255,.1)">
+
+      <a href="/profile/">Profile</a>
+      <a class="active" href="/security/">Security</a>
+      <a href="/notifications/">Notifications</a>
+    </div>
+
+    <div style="margin-top:auto;">
+      <a href="/sign-in/" class="muted">Sign Out</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOP -->
+    <div class="topbar">
+      <h1>Security</h1>
+      <div class="muted">Manage password and account protection</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- PASSWORD -->
+      <div class="panel">
+        <h2>Change Password</h2>
+        <p class="muted">
+          Update your password once authentication is connected.
+        </p>
+
+        <div class="field">
+          <label>Current Password</label>
+          <input type="password" placeholder="Enter current password">
+        </div>
+
+        <div class="field">
+          <label>New Password</label>
+          <input type="password" placeholder="Enter new password">
+        </div>
+
+        <div class="field">
+          <label>Confirm New Password</label>
+          <input type="password" placeholder="Confirm new password">
+        </div>
+
+        <button class="btn">Update Password</button>
+      </div>
+
+      <!-- RESET -->
+      <div class="panel">
+        <h2>Password Reset</h2>
+        <p class="muted">
+          If you forgot your password, use the reset flow instead.
+        </p>
+
+        <a href="/forgot-password/" class="btn" style="display:inline-block;text-align:center;">
+          Reset Password
+        </a>
+      </div>
+
+      <!-- FUTURE -->
+      <div class="panel">
+        <h3>Future Security Features</h3>
+
+        <div class="info">
+          <strong>Two-Factor Authentication (2FA)</strong>
+          <p class="muted">
+            Add an extra layer of protection using authenticator apps.
+          </p>
+        </div>
+
+        <div class="info">
+          <strong>Active Sessions</strong>
+          <p class="muted">
+            View and revoke devices logged into your account.
+          </p>
+        </div>
+
+        <div class="info">
+          <strong>Login Alerts</strong>
+          <p class="muted">
+            Get notified when your account is accessed from a new device.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+</body>
+</html>
